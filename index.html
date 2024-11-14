@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Storage with Color Choice</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to external CSS file -->
+</head>
+<body>
+    <div class="container">
+        <h1>Text Storage with Color Choice</h1>
+        <textarea id="textInput" placeholder="Enter your text here..."></textarea>
+        
+        <select id="colorInput">
+            <option value="black">Select Text Color</option>
+            <option value="blue">Blue</option>
+            <option value="red">Red</option>
+            <option value="green">Green</option>
+            <option value="yellow">Yellow</option>
+            <option value="pink">Pink</option>
+        </select>
+        
+        <button onclick="addText()">Save Text</button>
+        
+        <div class="categories">
+            <div class="category" id="asia">
+                <h2>Asia</h2>
+                <div class="entries" id="asiaEntries"></div>
+            </div>
+            <div class="category" id="mena">
+                <h2>MENA</h2>
+                <div class="entries" id="menaEntries"></div>
+            </div>
+            <div class="category" id="africaAustralia">
+                <h2>Africa & Australia</h2>
+                <div class="entries" id="africaAustraliaEntries"></div>
+            </div>
+            <div class="category" id="europe">
+                <h2>Europe</h2>
+                <div class="entries" id="europeEntries"></div>
+            </div>
+            <div class="category" id="us">
+                <h2>United States</h2>
+                <div class="entries" id="usEntries"></div>
+            </div>
+            <div class="category" id="latam">
+                <h2>Latam</h2>
+                <div class="entries" id="latamEntries"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script> <!-- Link to external JS file -->
+</body>
+</html>
