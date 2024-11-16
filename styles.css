@@ -58,23 +58,16 @@ button:hover {
 
 .categories {
     margin-top: 20px;
-    padding-top: 10px;
-    border-top: 1px solid #ddd;
 }
 
 .category {
     margin-top: 20px;
 }
 
-.category h2 {
-    color: #333;
-}
-
 .entries {
     margin-top: 10px;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #ddd;
 }
 
 .entry {
