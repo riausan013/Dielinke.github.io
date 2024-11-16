@@ -2,43 +2,54 @@ function addText() {
     const textInput = document.getElementById("textInput");
     const colorInput = document.getElementById("colorInput");
     const regionInput = document.getElementById("regionInput");
-    const category = regionInput.value; // Get selected region from the dropdown
+    const category = regionInput.value;
 
     if (textInput.value.trim() !== "") {
-        const entryDiv = document.createElement("div");
-        entryDiv.className = "entry";
-        entryDiv.textContent = textInput.value;
-        entryDiv.style.color = colorInput.value;
+        const newEntry = {
+            text: textInput.value,
+            color: colorInput.value
+        };
 
-        // Append to the correct category based on selected region
-        switch(category) {
-            case 'asia':
-                document.getElementById("asiaEntries").appendChild(entryDiv);
-                break;
-            case 'mena':
-                document.getElementById("menaEntries").appendChild(entryDiv);
-                break;
-            case 'africaAustralia':
-                document.getElementById("africaAustraliaEntries").appendChild(entryDiv);
-                break;
-            case 'europe':
-                document.getElementById("europeEntries").appendChild(entryDiv);
-                break;
-            case 'us':
-                document.getElementById("usEntries").appendChild(entryDiv);
-                break;
-            case 'latam':
-                document.getElementById("latamEntries").appendChild(entryDiv);
-                break;
-            default:
-                alert("Invalid category selected!");
-                return;
-        }
+        // Save to localStorage
+        const storedData = JSON.parse(localStorage.getItem(category)) || [];
+        storedData.push(newEntry);
+        localStorage.setItem(category, JSON.stringify(storedData));
 
-        // Clear input fields after saving
+        // Add entry to UI
+        appendEntry(category, newEntry);
+
+        // Clear input fields
         textInput.value = "";
         colorInput.value = "black"; // Reset color choice
     } else {
         alert("Please enter some text and select a region before saving.");
     }
 }
+
+function appendEntry(category, entry) {
+    const entriesDiv = document.getElementById(`${category}Entries`);
+    const entryDiv = document.createElement("div");
+    entryDiv.className = "entry";
+    entryDiv.textContent = entry.text;
+    entryDiv.style.color = entry.color;
+    entriesDiv.appendChild(entryDiv);
+}
+
+function loadEntries() {
+    const categories = [
+        "asia",
+        "mena",
+        "africaAustralia",
+        "europe",
+        "us",
+        "latam"
+    ];
+
+    categories.forEach(category => {
+        const storedData = JSON.parse(localStorage.getItem(category)) || [];
+        storedData.forEach(entry => appendEntry(category, entry));
+    });
+}
+
+// Load entries when the page is loaded
+window.onload = loadEntries;
