@@ -1,55 +1,48 @@
+document.addEventListener("DOMContentLoaded", () => {
+    const storedEntries = JSON.parse(localStorage.getItem("textEntries")) || {};
+
+    Object.keys(storedEntries).forEach(region => {
+        const regionDiv = document.getElementById(`${region}Entries`);
+        storedEntries[region].forEach(({ text, color }) => {
+            const entryDiv = document.createElement("div");
+            entryDiv.className = "entry";
+            entryDiv.textContent = text;
+            entryDiv.style.color = color;
+            regionDiv.appendChild(entryDiv);
+        });
+    });
+});
+
 function addText() {
     const textInput = document.getElementById("textInput");
     const colorInput = document.getElementById("colorInput");
     const regionInput = document.getElementById("regionInput");
-    const category = regionInput.value;
+    const regionDiv = document.getElementById(`${regionInput.value}Entries`);
 
     if (textInput.value.trim() !== "") {
-        const newEntry = {
+        const entryDiv = document.createElement("div");
+        entryDiv.className = "entry";
+        entryDiv.textContent = textInput.value;
+        entryDiv.style.color = colorInput.value;
+        regionDiv.appendChild(entryDiv);
+
+        saveToLocalStorage(regionInput.value, {
             text: textInput.value,
             color: colorInput.value
-        };
+        });
 
-        // Save to localStorage
-        const storedData = JSON.parse(localStorage.getItem(category)) || [];
-        storedData.push(newEntry);
-        localStorage.setItem(category, JSON.stringify(storedData));
-
-        // Add entry to UI
-        appendEntry(category, newEntry);
-
-        // Clear input fields
         textInput.value = "";
         colorInput.value = "black"; // Reset color choice
     } else {
-        alert("Please enter some text and select a region before saving.");
+        alert("Please enter some text before saving.");
     }
 }
 
-function appendEntry(category, entry) {
-    const entriesDiv = document.getElementById(`${category}Entries`);
-    const entryDiv = document.createElement("div");
-    entryDiv.className = "entry";
-    entryDiv.textContent = entry.text;
-    entryDiv.style.color = entry.color;
-    entriesDiv.appendChild(entryDiv);
+function saveToLocalStorage(region, entry) {
+    const storedEntries = JSON.parse(localStorage.getItem("textEntries")) || {};
+    if (!storedEntries[region]) {
+        storedEntries[region] = [];
+    }
+    storedEntries[region].push(entry);
+    localStorage.setItem("textEntries", JSON.stringify(storedEntries));
 }
-
-function loadEntries() {
-    const categories = [
-        "asia",
-        "mena",
-        "africaAustralia",
-        "europe",
-        "us",
-        "latam"
-    ];
-
-    categories.forEach(category => {
-        const storedData = JSON.parse(localStorage.getItem(category)) || [];
-        storedData.forEach(entry => appendEntry(category, entry));
-    });
-}
-
-// Load entries when the page is loaded
-window.onload = loadEntries;
